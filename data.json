@@ -1,0 +1,82 @@
+{
+    "faculties": [
+        {
+            "name": "ФІ",
+            "departments": [
+                {
+                    "name": "Математика",
+                    "students": [
+                        {
+                            "first_name": "Михайло",
+                            "surname": "Дмитрович",
+                            "last_name": "Оборін",
+                            "course": 1
+                        },
+                        {
+                            "first_name": "Зорян",
+                            "surname": "Анатолійович",
+                            "last_name": "Кулик",
+                            "course": 1
+                        }
+                    ],
+                    "teachers": [
+                        {
+                            "first_name": "Юрій",
+                            "surname": "Васильович",
+                            "last_name": "Митник",
+                            "group": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Інформатики",
+                    "students": [
+                        {
+                            "first_name": "Іванов",
+                            "surname": "Іванович",
+                            "last_name": "Іван",
+                            "course": 1
+                        },
+                        {
+                            "first_name": "Флавіан",
+                            "surname": "Зорянович",
+                            "last_name": "Кулик",
+                            "course": 1
+                        }
+                    ],
+                    "teachers": [
+                        {
+                            "first_name": "Пєчкурова",
+                            "surname": "Миколаївна",
+                            "last_name": "Олена",
+                            "group": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ФГН",
+            "departments": [
+                {
+                    "name": "ГФ",
+                    "students": [
+                        {
+                            "first_name": "Іванна",
+                            "surname": "Іванівна",
+                            "last_name": "Іванова",
+                            "course": 1
+                        },
+                        {
+                            "first_name": "Федір",
+                            "surname": "Федорович",
+                            "last_name": "Федоров",
+                            "course": 1
+                        }
+                    ],
+                    "teachers": []
+                }
+            ]
+        }
+    ]
+}
