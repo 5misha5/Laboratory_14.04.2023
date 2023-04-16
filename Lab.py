@@ -107,7 +107,7 @@ def UI():
                                     }
                                         ) for department in faculty["departments"]
                     }) for faculty in json["faculties"]}
-        update()
+        update_fac()
 
         
 
@@ -118,21 +118,33 @@ def UI():
     #-------------------------------------------------------------------
 
     def choose_faculty():
-        
+        nonlocal selected
+        selected = None
+
+        print(selected)
+
         return [faculty.name for faculty in university.faculties]
 
     def choose_department():
+        choose_faculty()
         if faculty_string.get()!=faculty_default_string:
             nonlocal selected
             selected = list(filter(lambda faculty: faculty.name == faculty_string.get(), university.faculties))[0]
+
+            print(selected)
+
             return [department.name for department in selected.departments]
         else:
             return []
     
     def choose_person():
+        choose_department()
         if department_string.get()!=department_default_string:
             nonlocal selected
             selected = list(filter(lambda department: department.name == department_string.get(), selected.departments))[0]
+
+            print(selected)
+
             return [f"{person.last_name} {person.first_name} {person.surname}" for person in selected.students.union(selected.teachers)]
         else:
             return []
@@ -155,23 +167,74 @@ def UI():
     department_string = StringVar(value=department_default_string)
     person_string = StringVar(value=person_default_string)
 
-    def update():
-        print("updating")
-        faculty_drop = OptionMenu( frame , faculty_string,  faculty_default_string, *choose_faculty())
-        faculty_drop.grid(row=0,column=0)
-        faculty_string.trace("w", lambda name, index, mode, sv=faculty_string: update())
+    faculty_drop = OptionMenu( frame , faculty_string,  faculty_default_string, *[])
+    faculty_drop.grid(row=0,column=0)
+    faculty_string.trace_id = faculty_string.trace("w", lambda name, index, mode, sv=faculty_string: update_dep(dep_string = department_default_string))
 
-        department_drop = OptionMenu( frame , department_string, department_default_string, *choose_department())
-        department_drop.grid(row=0,column=1)
-        department_string.trace("w", lambda name, index, mode, sv=department_string: update())
+    department_drop = OptionMenu( frame , department_string, department_default_string, *[])
+    department_drop.grid(row=0,column=1)
+    department_string.trace_id = department_string.trace("w", lambda name, index, mode, sv=department_string: update_per(per_string = person_default_string))
+    
+    person_drop = OptionMenu( frame , person_string, person_default_string, *[])
+    person_drop.grid(row=0,column=2)
+    person_string.trace_id = person_string.trace("w", lambda name, index, mode, sv=person_string: update_last())
+    
+    def update(per_string=None, dep_string=None, fac_string=None):
+        
+        update_fac()
+        update_dep()
+        update_per()
+    
 
-        person_drop = OptionMenu( frame , person_string, person_default_string, *choose_person())
-        person_drop.grid(row=0,column=2)
-        person_string.trace("w", lambda name, index, mode, sv=department_string: update())
+    def update_fac(fac_string = None):
+        nonlocal faculty_string
+        nonlocal faculty_drop
 
+        if fac_string:
+            faculty_string.set(fac_string)
+        
+        menu = faculty_drop["menu"]
+        menu.delete(0, "end")
+        for string in [faculty_default_string] + choose_faculty():
+            menu.add_command(label=string,
+                             command=lambda value=string: faculty_string.set(value))
+        
+    
+    def update_dep(dep_string = None):
+        choose_faculty()
+        nonlocal department_string
+        nonlocal department_drop
+
+        if dep_string:
+            department_string.set(dep_string)
+
+        menu = department_drop["menu"]
+        menu.delete(0, "end")
+        for string in [department_default_string] + choose_department():
+            menu.add_command(label=string,
+                             command=lambda value=string: department_string.set(value))
+
+        
+    def update_per(per_string = None):
+        nonlocal person_string
+        nonlocal person_drop
+
+        if per_string:
+            person_string.set(per_string)
+
+        menu = person_drop["menu"]
+        menu.delete(0, "end")
+        for string in [person_default_string] + choose_person():
+            menu.add_command(label=string,
+                             command=lambda value=string: person_string.set(value))
+
+        
+    def update_last():
+        choose_person()
         if person_string.get()!=person_default_string:
             nonlocal selected
             selected = list(filter(lambda person: f"{person.last_name} {person.first_name} {person.surname}" == person_string.get(), selected.students.union(selected.teachers)))[0]
+            print(selected)
 
     update()
 
