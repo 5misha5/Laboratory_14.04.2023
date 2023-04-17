@@ -16,7 +16,7 @@
                             "first_name": "Зорян",
                             "surname": "Анатолійович",
                             "last_name": "Кулик",
-                            "course": 1
+                            "course": 2
                         }
                     ],
                     "teachers": [
@@ -35,7 +35,7 @@
                             "first_name": "Іванов",
                             "surname": "Іванович",
                             "last_name": "Іван",
-                            "course": 1
+                            "course": 2
                         },
                         {
                             "first_name": "Флавіан",
@@ -49,7 +49,7 @@
                             "first_name": "Олена",
                             "surname": "Миколаївна",
                             "last_name": "Пєчкурова",
-                            "group": 1
+                            "group": 2
                         }
                     ]
                 }

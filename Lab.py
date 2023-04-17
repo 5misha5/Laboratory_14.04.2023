@@ -354,13 +354,13 @@ def UI():
                             (student.first_name == find_first_name_entry.get() or not find_first_name_entry.get()) and\
                             (student.surname == find_surname_entry.get() or not find_surname_entry.get()) and\
                             (student.last_name == find_last_name_entry.get() or not find_last_name_entry.get()) and\
-                            (str(student.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_students())))
+                            (str(student.course) == find_cg_entry.get() or not find_cg_entry.get()), selected.get_students())))
         else:
             text = "\n".join(map(str, filter(lambda teacher: \
                             (teacher.first_name == find_first_name_entry.get() or not find_first_name_entry.get()) and\
                             (teacher.surname == find_surname_entry.get() or not find_surname_entry.get()) and\
                             (teacher.last_name == find_last_name_entry.get() or not find_last_name_entry.get()) and\
-                            (str(teacher.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_teachers())))
+                            (str(teacher.group) == find_cg_entry.get() or not find_cg_entry.get()), selected.get_teachers())))
         printing_label.config(text=text)
         
     def sort_stud():
@@ -377,6 +377,10 @@ def UI():
 
     def cour_sort_stud():
         text = "\n".join(map(str, selected.sort_stud_by_alph_with_course(int(cour_entry.get()))))
+        printing_label.config(text=text)
+
+    def sort_by_course():
+        text = "\n".join(map(str, selected.sort_stud_course()))
         printing_label.config(text=text)
     
     
@@ -493,25 +497,28 @@ def UI():
 
     return_frame = Frame(window)
 
+    sort_cour_stud = Button(return_frame, text="Sort students by course", command=sort_by_course)
+    sort_cour_stud.grid(row=0, column=1)
+
     sort_label = Label(return_frame, text="Sort: ")
-    sort_label.grid(row=0, column=0)
+    sort_label.grid(row=1, column=0)
 
     sort_stud_butt = Button(return_frame, text="students", command=sort_stud)
-    sort_stud_butt.grid(row=0, column=1)
+    sort_stud_butt.grid(row=1, column=1)
 
     sort_teach_butt = Button(return_frame, text="teachers", command=sort_teach)
-    sort_teach_butt.grid(row=0, column=2)
+    sort_teach_butt.grid(row=1, column=2)
 
 
 
     cour_label = Label(return_frame, text="get students on: ")
-    cour_label.grid(row=1, column=0)
+    cour_label.grid(row=2, column=0)
 
     cour_stud = Button(return_frame, text="course", command=cour_stud_f)
-    cour_stud.grid(row=1, column=1)
+    cour_stud.grid(row=2, column=1)
 
     cour_stud_sort = Button(return_frame, text="course sorted", command=cour_sort_stud)
-    cour_stud_sort.grid(row=1, column=2)
+    cour_stud_sort.grid(row=2, column=2)
 
     cour_label = Label(return_frame, text="Course: ")
     cour_label.grid(row=3, column=0)
