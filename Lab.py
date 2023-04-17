@@ -20,7 +20,11 @@ class Person:
     
     def __repr__(self) -> str:
         
-        return f"{self.first_name} {self.surname} {self.last_name}"
+        return f"{self.last_name} {self.first_name} {self.surname}"
+    
+    def __str__(self) -> str:
+        
+        return f"{self.last_name} {self.first_name} {self.surname}"
         
 class Student(Person):
     
@@ -73,6 +77,10 @@ class Department(Institution):
         
         return f"{self.name}, Students: {self.students}, Teachers: {self.teachers}"
     
+    def __str__(self) -> str:
+        
+        return f"{self.name}, Students: {self.students}, Teachers: {self.teachers}"
+    
     def get_students(self):
         return self.students
 
@@ -86,6 +94,10 @@ class Faculty(Institution):
         self.departments = departments
     
     def __repr__(self) -> str:
+        
+        return f"{self.name}, Departments: {self.departments}"
+    
+    def __str__(self) -> str:
         
         return f"{self.name}, Departments: {self.departments}"
     
@@ -110,6 +122,10 @@ class University(Institution):
         self.faculties = faculties
 
     def __repr__(self) -> str:
+        
+        return f"{self.name}, Faculties: {self.faculties}"
+    
+    def __str__(self) -> str:
         
         return f"{self.name}, Faculties: {self.faculties}"
     
@@ -221,7 +237,7 @@ def UI():
 
     #-------------------------------------------------------------------
     file_button = Button(window, text="Choose file", command=choose_file)
-    file_button.grid(row=5,column=0, sticky=E+W)
+    file_button.grid(row=6,column=0, sticky=E+W)
     #-------------------------------------------------------------------
 
     
@@ -244,6 +260,9 @@ def UI():
     
     person_drop = OptionMenu( selection_frame , person_string, person_default_string, *[])
     person_drop.grid(row=0,column=2)
+
+    printing_label = Label(window, wraplength=300)
+    printing_label.grid(row=5, column=0)
     
     def get_selected_faculty():
         return list(filter(lambda faculty: faculty.name == faculty_string.get(), university.faculties))[0]
@@ -316,35 +335,34 @@ def UI():
     
     def find():
         if find_by.get() == "Student":
-            for student in (filter(lambda student: \
+            text = "\n".join(map(str, filter(lambda student: \
                             (student.first_name == find_first_name_entry.get() or not find_first_name_entry.get()) and\
                             (student.surname == find_surname_entry.get() or not find_surname_entry.get()) and\
                             (student.last_name == find_last_name_entry.get() or not find_last_name_entry.get()) and\
-                            (str(student.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_students())):
-                print(student)
+                            (str(student.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_students())))
         else:
-            for teacher in (filter(lambda teacher: \
+            text = "\n".join(map(str, filter(lambda teacher: \
                             (teacher.first_name == find_first_name_entry.get() or not find_first_name_entry.get()) and\
                             (teacher.surname == find_surname_entry.get() or not find_surname_entry.get()) and\
                             (teacher.last_name == find_last_name_entry.get() or not find_last_name_entry.get()) and\
-                            (str(teacher.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_teachers())):
-                print(teacher)
-
+                            (str(teacher.first_name) == find_first_name_entry.get() or not find_first_name_entry.get()), selected.get_teachers())))
+        printing_label.config(text=text)
+        
     def sort_stud():
-        for student in selected.sort_stud_alph():
-            print(student)
+        text = "\n".join(map(str, selected.sort_stud_alph()))
+        printing_label.config(text=text)
 
     def sort_teach():
-        for student in selected.sort_teach_alph():
-            print(student)
+        text = "\n".join(map(str, selected.sort_teach_alph()))
+        printing_label.config(text=text)
 
     def cour_stud_f():
-        for student in selected.get_students_course(int(cour_entry.get())):
-            print(student)
+        text = "\n".join(map(str, selected.get_students_course(int(cour_entry.get()))))
+        printing_label.config(text=text)
 
     def cour_sort_stud():
-        for student in selected.sort_stud_by_alph_with_course(int(cour_entry.get())):
-            print(student)
+        text = "\n".join(map(str, selected.sort_stud_by_alph_with_course(int(cour_entry.get()))))
+        printing_label.config(text=text)
     
     
     
