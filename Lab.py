@@ -32,12 +32,27 @@ class Student(Person):
         super().__init__(first_name, surname, last_name)
         self.course = course
 
+    def __repr__(self) -> str:
+        
+        return f"{self.last_name} {self.first_name} {self.surname} Course: {self.course}"
+    
+    def __str__(self) -> str:
+        
+        return f"{self.last_name} {self.first_name} {self.surname} Course: {self.course}"
+
 class Teacher(Person):
     
     def __init__(self, first_name, surname, last_name, group) -> None:
         super().__init__(first_name, surname, last_name)
         self.group = group
-
+    def __repr__(self) -> str:
+        
+        return f"{self.last_name} {self.first_name} {self.surname} Group: {self.group}"
+    
+    def __str__(self) -> str:
+        
+        return f"{self.last_name} {self.first_name} {self.surname} Group: {self.group}"
+    
 class Institution(ABC):
 
     @abstractmethod
@@ -261,7 +276,7 @@ def UI():
     person_drop = OptionMenu( selection_frame , person_string, person_default_string, *[])
     person_drop.grid(row=0,column=2)
 
-    printing_label = Label(window, wraplength=300)
+    printing_label = Label(window, wraplength=400)
     printing_label.grid(row=5, column=0)
     
     def get_selected_faculty():
