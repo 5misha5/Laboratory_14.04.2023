@@ -305,7 +305,7 @@ def UI():
         update()
 
     def create():
-        if isinstance(selected, Person):
+        if isinstance(selected, Department):
             
             if person_cg_entry.get().isdigit():
                 if person_str.get() == "Student":
@@ -539,12 +539,16 @@ def UI():
             return_frame.grid_forget()
             find_person_frame.grid_forget()
 
-            person_name_frame.grid(row=2, column=0)
+            #person_name_frame.grid(row=2, column=0)
+
+        elif isinstance(selected, Department):
             
-        if isinstance(selected, Institution):
+            person_name_frame.grid(row=3, column=0)
+            
+        else:
             institution_name_frame.grid(row=2, column=0)
-            return_frame.grid(row=4, column=0)
-            find_person_frame.grid(row=3, column=0)
+            return_frame.grid(row=5, column=0)
+            find_person_frame.grid(row=4, column=0)
 
             person_name_frame.grid_forget()
 
